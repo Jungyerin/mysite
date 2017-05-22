@@ -1,4 +1,4 @@
-package com.jx372.mysite.action.guestbook;
+package com.jx372.mysite.action.board;
 
 import java.io.IOException;
 
@@ -19,25 +19,20 @@ public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		String tempno=request.getParameter("no");
-		Long no=Long.parseLong(tempno);
-		String pwd = request.getParameter("pwd");
-		String name=request.getParameter("name");
 
-		//System.out.println(no+" "+pwd);
+		Long userno = Long.parseLong(request.getParameter("userno"));
+		Long bno = Long.parseLong(request.getParameter("bno"));
+		BoardVo boardvo = new BoardDao().get(bno);
 
-		EmailListVo vo = new EmailListVo();
-		vo.setNo(no);
-		vo.setPwd(pwd);
-		vo.setName(name);
+		request.setAttribute("bno", bno);
 
-		new EmailListDao().delete(no, pwd, name);
+		boardvo.setNo(bno);
+		boardvo.setUserno(userno);
 
-		//redirect 응답
-		response.sendRedirect(request.getContextPath()+"/guestbook");
+		new BoardDao().delete(bno, userno);
 
-
+		// redirect 응답
+		response.sendRedirect(request.getContextPath() + "/board");
 	}
 
 }

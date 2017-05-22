@@ -3,7 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+	pageContext.setAttribute("newLine", "\n"); //\n을 저장할수없어서 변수에 저장해줌.
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +17,7 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/include/header.jsp" />
+		<c:import url="/WEB-INF/views/include/header.jsp" />
 		<div id="wrapper">
 			<div id="content">
 				<form
@@ -39,11 +41,12 @@
 					</table>
 				</form>
 				<br>
-
+				<c:set var="count" value="${fn:length(list) }" />
+				<!-- int i=list.size(); -->
 				<c:forEach items="${list }" var="vo" varStatus="status">
 					<table width="510" border="1">
 						<tr>
-							<td>[${status.index } : ${status.count }]</td>
+							<td>[${count-status.index }]</td>
 							<!-- no값이 아니라 전체 list 수의 번호 순 -->
 							<td>${vo.name }</td>
 							<td>${vo.date }</td>
@@ -51,15 +54,18 @@
 								href="${pageContext.servletContext.contextPath }/guestbook?a=deleteform&no=${vo.no }&name=${authUser.name }">삭제</a></td>
 						</tr>
 						<tr>
-							<td colspan="4">${vo.message }</td>
+							<td colspan="4">${fn:replace(vo.message, newLine,"<br>") }</td>
+							<!-- \n을 쓸수없기때문에 변수에 저장하여 넣어주어야 함. -->
 						</tr>
 					</table>
 					<br>
 				</c:forEach>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/include/navigation.jsp" />
-		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+		<c:import url="/WEB-INF/views/include/navigation.jsp">
+			<c:param name="menu" value="guestbook"/>
+		</c:import>
+		<c:import url="/WEB-INF/views/include/footer.jsp" />
 	</div>
 
 </body>
