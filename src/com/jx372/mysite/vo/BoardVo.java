@@ -2,6 +2,7 @@ package com.jx372.mysite.vo;
 
 public class BoardVo {
 	
+	private int rownum;
 	private Long no;
 	private Long userno;
 	private String name;
@@ -14,6 +15,12 @@ public class BoardVo {
 	private int depth;
 	
 	
+	public int getRownum() {
+		return rownum;
+	}
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
 	public String getName() {
 		return name;
 	}

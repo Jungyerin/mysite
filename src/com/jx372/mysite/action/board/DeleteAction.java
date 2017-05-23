@@ -19,6 +19,18 @@ public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		HttpSession session=request.getSession();
+		if(session == null){
+			WebUtils.redirect("/mysite/user?a=loginform", request, response);
+			return;
+		}
+		
+		UserVo authUser=(UserVo)session.getAttribute("authUser");
+		if(authUser==null){
+			WebUtils.redirect("/mysite/user?a=loginform", request, response);
+			return;
+		}
+		Long no=authUser.getNo();					
 
 		Long userno = Long.parseLong(request.getParameter("userno"));
 		Long bno = Long.parseLong(request.getParameter("bno"));
@@ -28,8 +40,11 @@ public class DeleteAction implements Action {
 
 		boardvo.setNo(bno);
 		boardvo.setUserno(userno);
-
-		new BoardDao().delete(bno, userno);
+		
+		if(no==userno)
+		{
+			new BoardDao().delete(bno, userno);
+		}
 
 		// redirect 응답
 		response.sendRedirect(request.getContextPath() + "/board");

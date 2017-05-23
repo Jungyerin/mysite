@@ -31,6 +31,8 @@ public class ViewAction implements Action {
 		
 		Long bno=Long.parseLong(request.getParameter("bno"));
 		BoardVo boardvo = new BoardDao().get(bno);
+		//new BoardDao().updatehit(boardvo, bno);
+		//System.out.println("조회수 업데이트"+boardvo.getHit());
 
 		request.setAttribute("boardvo", boardvo);
 

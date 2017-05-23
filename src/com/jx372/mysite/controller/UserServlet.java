@@ -7,26 +7,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jx372.mysite.action.main.MainActionFactory;
 import com.jx372.mysite.action.user.UserActionFactory;
 import com.jx372.web.action.Action;
 
-@WebServlet("/user")
-public class UserSerlvet extends HttpServlet {
+//@WebServlet("/user")
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-
+	
+	@Override
+	public void init() throws ServletException {
+		String configPath = getServletConfig().getInitParameter("config");
+		System.out.println(configPath);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	request.setCharacterEncoding("UTF-8");
-		
-		String actionName=request.getParameter("a");
-		Action action=new UserActionFactory().getAction(actionName);
-		
+		// request.setCharacterEncoding("UTF-8");
+
+		String actionName = request.getParameter("a");
+		Action action = new UserActionFactory().getAction(actionName);
+
 		action.execute(request, response);
 	}
 

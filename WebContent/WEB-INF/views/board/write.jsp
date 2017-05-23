@@ -17,9 +17,22 @@
 				<form class="board-form" method="post" action="/mysite/board">
 					<input type = "hidden" name = "a" value="write">
 					<input type = "hidden" name = "userno" value="${userno }">
+					<input type = "hidden" name = "bno" value="${bno }">
+					<input type = "hidden" name = "gno" value="${gno }">
+					<input type = "hidden" name = "ono" value="${ono }">
+					<input type = "hidden" name = "depth" value="${depth }">
 					<table class="tbl-ex">
 						<tr>
-							<th colspan="2">글쓰기</th>
+							<th colspan="2">
+								<c:choose>
+									<c:when test="${gno == 0 }">									
+										글쓰기
+									</c:when>
+									<c:otherwise>
+										답글쓰기
+									</c:otherwise>
+								</c:choose>
+							</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>

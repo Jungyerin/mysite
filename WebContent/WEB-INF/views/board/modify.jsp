@@ -33,7 +33,7 @@
 						</tr>
 						<tr>
 							<td class="label">내용</td>
-							<td><textarea id="content" name="content">${fn:replace(boardvo.content, newLine,"<br>")}</textarea></td>
+							<td><textarea id="content" name="content">${fn:trim(fn:replace(boardvo.content, newLine,"<br>"))}</textarea></td>
 						</tr>
 					</table>
 					<div class="bottom">

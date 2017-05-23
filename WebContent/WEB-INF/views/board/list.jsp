@@ -31,15 +31,29 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:set var="count" value="${fn:length(list) }" />
+					<c:set var="count" value="${fn:length(list2) }" />
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<tr>
-							<td>${count-status.index }</td>
-							<td class="left"><a href="${pageContext.servletContext.contextPath }/board?a=view&bno=${vo.no }">${vo.title }</a></td>
+							<td>${count-(vo.rownum-1) }</td>
+							<c:choose>
+								<c:when test="${vo.depth > 0}">
+									<td class="left" style="padding-left:${vo.depth * 20}px">
+										<img
+										src="${pageContext.request.contextPath }/assets/images/reply.png">
+								</c:when>
+								<c:otherwise>
+									<td class="left">
+								</c:otherwise>
+							</c:choose>
+							<a
+								href="${pageContext.servletContext.contextPath }/board?a=view&bno=${vo.no }">${vo.title }</a>
+							</td>
 							<td>${vo.name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.date }</td>
-							<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&userno=${no }&bno=${vo.no }" class="del">삭제</a></td>
+							<td><a
+								href="${pageContext.servletContext.contextPath }/board?a=delete&userno=${no }&bno=${vo.no }"
+								class="del">삭제</a></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -47,14 +61,32 @@
 
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
+
+						<li><c:choose>
+								<c:when test="${pageno <= 1 }">
+									<a href="${pageContext.servletContext.contextPath }/board?a=list&pageno=${i-1}">◀</a>
+								</c:when>
+								<c:otherwise>
+									<a href="">◀</a>
+								</c:otherwise>
+							</c:choose></li>
 						<!-- for문을 이용해서 해야함 -->
-						<li><a href="">1</a></li>
-						<li><a href="">2</a></li>
-						<li class="selected">3</li>
-						<li><a href="">4</a></li>
-						<li><a href="">5</a></li>
-						<li><a href="">▶</a></li>
+
+						<c:forEach var="i" begin="1" end="${fn:length(list2)/10 +1 }">
+							<c:if test="${pageno==i }">
+								<li class="selected">
+							</c:if>
+							<a href="${pageContext.servletContext.contextPath }/board?a=list&pageno=${i}">${i }</a>
+							</li>
+						</c:forEach>
+						<li><c:choose>
+								<c:when test="${pageno >= i }">
+									<a href="${pageContext.servletContext.contextPath }/board?a=list&pageno=${i+1}">▶</a>
+								</c:when>
+								<c:otherwise>
+									<a href="">▶</a>
+								</c:otherwise>
+							</c:choose></li>
 					</ul>
 				</div>
 				<div class="bottom">

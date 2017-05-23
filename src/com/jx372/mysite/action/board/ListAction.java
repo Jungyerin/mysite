@@ -32,11 +32,20 @@ public class ListAction implements Action {
 			return;
 		}
 
-		List<BoardVo> list = new BoardDao().getList();
+		int pageno=1;
+		
+		if(request.getParameter("pageno")!=null){
+			pageno=Integer.parseInt(request.getParameter("pageno"));
+		}
+		
+		List<BoardVo> list = new BoardDao().getList(pageno);
+		List<BoardVo> list2 = new BoardDao().getList();
 
 		Long no=authUser.getNo();
 		request.setAttribute("no", no);
 		request.setAttribute("list", list);
+		request.setAttribute("list2", list2);
+		request.setAttribute("pageno", pageno);
 
 		WebUtils.forward("/WEB-INF/views/board/list.jsp", request, response);
 	}
