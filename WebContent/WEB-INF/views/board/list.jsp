@@ -63,8 +63,8 @@
 					<ul>
 
 						<li><c:choose>
-								<c:when test="${pageno <= 1 }">
-									<a href="${pageContext.servletContext.contextPath }/board?a=list&pageno=${i-1}">◀</a>
+								<c:when test="${pageno < 1 }">
+									<a href="${pageContext.servletContext.contextPath }/board?a=list&pageno=${pageno-1}">◀</a>
 								</c:when>
 								<c:otherwise>
 									<a href="">◀</a>
@@ -80,8 +80,8 @@
 							</li>
 						</c:forEach>
 						<li><c:choose>
-								<c:when test="${pageno >= i }">
-									<a href="${pageContext.servletContext.contextPath }/board?a=list&pageno=${i+1}">▶</a>
+								<c:when test="${pageno < i }">
+									<a href="${pageContext.servletContext.contextPath }/board?a=list&pageno=${pageno+1}">▶</a>
 								</c:when>
 								<c:otherwise>
 									<a href="">▶</a>
