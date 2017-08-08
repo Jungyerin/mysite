@@ -45,8 +45,7 @@
 									<td class="left">
 								</c:otherwise>
 							</c:choose>
-							<a
-								href="${pageContext.servletContext.contextPath }/board?a=view&bno=${vo.no }">${vo.title }</a>
+							<a href="${pageContext.servletContext.contextPath }/board?a=view&bno=${vo.no }">${vo.title }</a>
 							</td>
 							<td>${vo.name }</td>
 							<td>${vo.hit }</td>
